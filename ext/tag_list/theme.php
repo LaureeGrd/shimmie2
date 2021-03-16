@@ -157,7 +157,7 @@ class TagListTheme extends Themelet
      *                 ...
      *              )
      */
-    public function display_related_block(Page $page, $tag_infos, $block_name)
+    public function display_related_block(Page $page, $tag_infos, $block_name, $omit_count = 0)
     {
         global $config;
 
@@ -165,6 +165,10 @@ class TagListTheme extends Themelet
             $tag_infos,
             $config->get_string(TagListConfig::RELATED_SORT)
         );
+
+        if ($omit_count > 0) {
+            $main_html .= "<span class='omitted-tags-notice' style='font-size: smaller; color: #777;'>$omit_count tag(s) were <a style='color: #777' href=".make_link("ext_doc/tag_omissions").">automatically omitted</a>.</span>";
+        }
 
         $page->add_block(new Block($block_name, $main_html, "left", 10));
     }

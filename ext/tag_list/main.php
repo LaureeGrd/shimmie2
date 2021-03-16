@@ -424,6 +424,14 @@ class TagList extends Extension
             return;
         }
 
+        $omit_count = 0;
+        if (class_exists("TagOmissions")) {
+            $tagomissions = new TagOmissions;
+            $new_omissions = $tagomissions->get_omissions($starting_tags);
+            $omitted_tags = array_merge($omitted_tags, $new_omissions);
+            $omit_count = count($new_omissions);
+        }
+
         $query = "SELECT tags.* FROM tags INNER JOIN (
                 SELECT it2.tag_id
                 FROM image_tags AS it1
@@ -441,7 +449,7 @@ class TagList extends Extension
 
         $tags = $database->get_all($query, $args);
         if (count($tags) > 0) {
-            $this->theme->display_related_block($page, $tags, "Related Tags");
+            $this->theme->display_related_block($page, $tags, "Related Tags", $omit_count);
         }
     }
 
