@@ -45,20 +45,19 @@ class RatingsTheme extends Themelet
 
     public function get_selection_rater_html(array $selected_options, bool $multiple = false, array $available_options = null): string
     {
-        $output = "<select name='rating".($multiple ? "[]' multiple='multiple'" : "' ")." >";
+        $ratings = Ratings::get_sorted_ratings();
 
-        $options = Ratings::get_sorted_ratings();
+        $options = [];
 
-        foreach ($options as $option) {
-            if ($available_options!=null && !in_array($option->code, $available_options)) {
+        foreach ($ratings as $rating) {
+            if ($available_options!=null && !in_array($rating->code, $available_options)) {
                 continue;
             }
 
-            $output .= "<option value='".$option->code."' ".
-                (in_array($option->code, $selected_options) ? "selected='selected'": "")
-                .">".$option->name."</option>";
+            $options[$rating->code] = $rating->name;
         }
-        return $output."</select>";
+
+        return $this->build_selector("rating", $options, ($multiple ? "multiple" : ""), false, $selected_options);
     }
 
     public function get_help_html(array $ratings): string
