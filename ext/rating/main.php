@@ -429,8 +429,12 @@ class Ratings extends Extension
             $ratings = self::get_sorted_ratings();
         }
         return array_combine(
-            array_map(function($o) { return $o->code;}, $ratings),
-            array_map(function($o) { return $o->name;}, $ratings)
+            array_map(function ($o) {
+                return $o->code;
+            }, $ratings),
+            array_map(function ($o) {
+                return $o->name;
+            }, $ratings)
         );
     }
 

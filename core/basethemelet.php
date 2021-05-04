@@ -150,7 +150,7 @@ class BaseThemelet
 
     /**
      * Generates a <select> HTML template and sets up the given options.
-     * 
+     *
      * @param string $name The name attribute of <select>.
      * @param array $options A pair of parameters for <option> tags. First one is value, second one is text. Example: ('optionA', 'Choose Option A').
      * @param string $attributes Flags for <select>. Example: 'multiple required' becomes <select multiple required>
